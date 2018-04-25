@@ -1,0 +1,30 @@
+{
+  "name": "captain-gradd",
+  "version": "1.0.0",
+  "description": "The Captain that drives GRADD service",
+  "homepage": "https://github.com/DAVFoundation/captain-gradd#readme",
+  "bugs": {
+    "url": "https://github.com/DAVFoundation/captain-gradd/issues"
+  },
+  "license": "MIT",
+  "author": "",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DAVFoundation/captain-gradd.git"
+  },
+  "scripts": {
+    "start": "nodemon ./src/index.js",
+    "test": ""
+  },
+  "dependencies": {
+    "dav-js": "*",
+    "axios": "^0.18.0",
+    "geolib": "^2.0.24",
+    "qs": "^6.5.1",
+    "rxjs": "^5.5.8"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.2"
+  }
+}
