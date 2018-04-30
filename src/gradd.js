@@ -3,38 +3,43 @@ const {
   addNewVehicle: apiAddNewVehicle,
   updateVehicle: apiUpdateVehicle
 } = require('./missioncontrol/vehicles');
-const { DavSDK, API } = require('@davfoundation/dav-js');
+const { DavSDK, API } = require('dav-js');
 const Rx = require('rxjs/Rx');
+const stationId = require('./station-id');
+const mnemonic = require('../mnemonic');
 
 class Gradd {
   constructor() {
   }
 
   async init() {
-    station.sdk = new DavSDK("1234", station.davId, mnemonic);
-    station.location = {
-      longitude: 8.5444809,
-      latitude: 47.397669
-    };
-    station.needs = [];
-    station.bids = [];
-    let isRegistered = await station.sdk.isRegistered();
+    this.station = {
+      sdk:new DavSDK(stationId, stationId, mnemonic),
+      location: {
+        longitude: 8.5444809,
+        latitude: 47.397669
+      },
+      needs: [],
+      bids: []
+    }
+    
+    let isRegistered = await this.station.sdk.isRegistered();
     if (isRegistered) {
-      let missionContract = station.sdk.mission().contract();
+      let missionContract = this.station.sdk.mission().contract();
       missionContract.subscribe(
-        mission => this.onContractCreated(station, mission),
+        mission => this.onContractCreated(this.station, mission),
         err => console.log(err),
         () => console.log('')
       );
     }
-    const droneDelivery = station.sdk.needs().forType('route_plan', {
-      ...station.location,
+    const droneDelivery = this.station.sdk.needs().forType('route_plan', {
+      ...this.station.location,
       radius: 10e10,
       ttl: 120 // TTL in seconds
     });
 
     droneDelivery.subscribe(
-      need => this.onNeed(station, need),
+      need => this.onNeed(this.station, need),
       err => console.log(err),
       () => console.log('')
     );
@@ -243,8 +248,7 @@ class Gradd {
     if (station.needs.includes(need.id)) {
       return;
     }
-    const totalDist = distToPickup + distToDropoff;
-
+    
     const bidInfo = {
       price: '5000',
       price_type: 'flat',
