@@ -10,6 +10,7 @@ const mnemonic = require('../mnemonic');
 
 class Gradd {
   constructor() {
+
   }
 
   async init() {
@@ -23,6 +24,19 @@ class Gradd {
       bids: []
     }
     
+    this.station.sdk.initCaptain({
+      id: stationId,
+      model: 'GRADD',
+      icon: `https://lorempixel.com/100/100/abstract/?${stationId}`,
+      coords: {
+        long: this.station.location.longitude,
+        lat: this.station.location.latitude
+      },
+      missions_completed: 0,
+      missions_completed_7_days: 0,
+      status: 'available'
+    });
+
     let isRegistered = await this.station.sdk.isRegistered();
     if (isRegistered) {
       let missionContract = this.station.sdk.mission().contract();
@@ -109,55 +123,55 @@ class Gradd {
     switch (vehicle.status) {
       case 'contract_received':
         setTimeout(async () => {
-          await this.updateStatus(mission, 'takeoff_start', 'takeoff_start');
+          await this.updateStatus(mission, 'in_progress', 'in_progress');
         }, 3000);
         break;
-      case 'takeoff_start':
-        setTimeout(async () => {
-          await this.updateStatus(mission, 'travelling_pickup', 'travelling_pickup');
-        }, 3000);
-        break;
-      case 'travelling_pickup':
-        setTimeout(async () => {
-          await this.updateStatus(mission, 'landing_pickup', 'landing_pickup');
-        }, 3000);
-        break;
-      case 'landing_pickup':
-        setTimeout(async () => {
-          await this.updateStatus(mission, 'waiting_pickup', 'waiting_pickup');
-        }, 3000);
-        break;
-      case 'waiting_pickup':
-        console.log(`drone waiting for pickup`);
-        break;
-      case 'takeoff_pickup':
-        setTimeout(async () => {
-          await this.updateStatus(mission, 'takeoff_pickup_wait', 'takeoff_pickup_wait');
-        }, 3000);
-        break;
-      case 'takeoff_pickup_wait':
-        setTimeout(async () => {
-          await this.updateStatus( mission, 'travelling_dropoff', 'travelling_dropoff' );
-        }, 3000);
-        break;
-      case 'travelling_dropoff':
-        setTimeout(async () => {
-          await this.updateStatus(mission, 'landing_dropoff', 'landing_dropoff');
-        }, 3000);
-        break;
-      case 'landing_dropoff':
-        setTimeout(async () => {
-          await this.updateStatus(
-            mission,
-            'waiting_dropoff',
-            'waiting_dropoff'
-          );
-        }, 3000);
-        break;
-      case 'waiting_dropoff':
+      // case 'takeoff_start':
+      //   setTimeout(async () => {
+      //     await this.updateStatus(mission, 'travelling_pickup', 'travelling_pickup');
+      //   }, 3000);
+      //   break;
+      // case 'travelling_pickup':
+      //   setTimeout(async () => {
+      //     await this.updateStatus(mission, 'landing_pickup', 'landing_pickup');
+      //   }, 3000);
+      //   break;
+      // case 'landing_pickup':
+      //   setTimeout(async () => {
+      //     await this.updateStatus(mission, 'waiting_pickup', 'waiting_pickup');
+      //   }, 3000);
+      //   break;
+      // case 'waiting_pickup':
+      //   console.log(`drone waiting for pickup`);
+      //   break;
+      // case 'takeoff_pickup':
+      //   setTimeout(async () => {
+      //     await this.updateStatus(mission, 'takeoff_pickup_wait', 'takeoff_pickup_wait');
+      //   }, 3000);
+      //   break;
+      // case 'takeoff_pickup_wait':
+      //   setTimeout(async () => {
+      //     await this.updateStatus( mission, 'travelling_dropoff', 'travelling_dropoff' );
+      //   }, 3000);
+      //   break;
+      // case 'travelling_dropoff':
+      //   setTimeout(async () => {
+      //     await this.updateStatus(mission, 'landing_dropoff', 'landing_dropoff');
+      //   }, 3000);
+      //   break;
+      // case 'landing_dropoff':
+      //   setTimeout(async () => {
+      //     await this.updateStatus(
+      //       mission,
+      //       'waiting_dropoff',
+      //       'waiting_dropoff'
+      //     );
+      //   }, 3000);
+      //   break;
+      case 'in_progress':
         setTimeout(async () => {
           await this.updateStatus(mission, 'completed', 'available');
-        }, 3000);
+        }, 30000);
         break;
       case 'available':
         await API.missions.updateMission(mission.mission_id, {
