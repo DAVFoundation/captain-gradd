@@ -66,7 +66,7 @@ class Gradd {
     const missionUpdates = Rx.Observable.timer(0, 1000)
       .mergeMap(async () => {
         let mission = await API.missions.getMission(missionId);
-        let vehicle = await apiGetVehicle(mission.vehicle_id);
+        let vehicle = await API.captains.getCaptain(mission.vehicle_id);
         return { mission, vehicle };
       })
       .distinctUntilChanged(
@@ -170,8 +170,8 @@ class Gradd {
       //   break;
       case 'in_progress':
         setTimeout(async () => {
-          await this.updateStatus(mission, 'completed', 'available');
-        }, 30000);
+          await this.updateStatus(mission, 'ready', 'ready');
+        }, 20000);
         break;
       case 'available':
         await API.missions.updateMission(mission.mission_id, {
