@@ -92,7 +92,10 @@ class Gradd {
                   state.vehicle
                 );
                 break;
+              case 'confirmed':
+                break;
               case 'completed':
+                await this.updateStatus(state.mission, 'completed', 'available');
                 missionUpdates.unsubscribe();
                 break;
               default:
@@ -109,77 +112,39 @@ class Gradd {
       );
   }
 
-  async onInProgress(mission, vehicle) {
+  async onInProgress(mission, captain) {
     await API.missions.updateMission(mission.mission_id, {
-      status: 'in_mission'
+      status: 'in_mission',
+      captain_id: captain.id
     });
 
-    await this.onInMission(mission, vehicle);
+    await this.onInMission(mission, captain);
   }
 
-  async onInMission(mission, vehicle) {
+  async onInMission(mission, captain) {
     // await apiUpdateVehicle(vehicle);
 
-    switch (vehicle.status) {
+    switch (captain.status) {
       case 'contract_received':
         setTimeout(async () => {
           await this.updateStatus(mission, 'in_progress', 'in_progress');
         }, 3000);
         break;
-      // case 'takeoff_start':
-      //   setTimeout(async () => {
-      //     await this.updateStatus(mission, 'travelling_pickup', 'travelling_pickup');
-      //   }, 3000);
-      //   break;
-      // case 'travelling_pickup':
-      //   setTimeout(async () => {
-      //     await this.updateStatus(mission, 'landing_pickup', 'landing_pickup');
-      //   }, 3000);
-      //   break;
-      // case 'landing_pickup':
-      //   setTimeout(async () => {
-      //     await this.updateStatus(mission, 'waiting_pickup', 'waiting_pickup');
-      //   }, 3000);
-      //   break;
-      // case 'waiting_pickup':
-      //   console.log(`drone waiting for pickup`);
-      //   break;
-      // case 'takeoff_pickup':
-      //   setTimeout(async () => {
-      //     await this.updateStatus(mission, 'takeoff_pickup_wait', 'takeoff_pickup_wait');
-      //   }, 3000);
-      //   break;
-      // case 'takeoff_pickup_wait':
-      //   setTimeout(async () => {
-      //     await this.updateStatus( mission, 'travelling_dropoff', 'travelling_dropoff' );
-      //   }, 3000);
-      //   break;
-      // case 'travelling_dropoff':
-      //   setTimeout(async () => {
-      //     await this.updateStatus(mission, 'landing_dropoff', 'landing_dropoff');
-      //   }, 3000);
-      //   break;
-      // case 'landing_dropoff':
-      //   setTimeout(async () => {
-      //     await this.updateStatus(
-      //       mission,
-      //       'waiting_dropoff',
-      //       'waiting_dropoff'
-      //     );
-      //   }, 3000);
-      //   break;
       case 'in_progress':
         setTimeout(async () => {
           await this.updateStatus(mission, 'ready', 'ready');
         }, 20000);
         break;
+      case 'ready':
+        break;
       case 'available':
         await API.missions.updateMission(mission.mission_id, {
-          status: 'completed'
+          status: 'completed',
+          captain_id: captain.id
         });
         break;
       default:
-        console.log(`bad vehicle.status ${vehicle}`);
+        console.log(`bad captain.status ${captain}`);
         break;
     }
   }
@@ -188,75 +153,9 @@ class Gradd {
     await API.missions.updateMission(mission.mission_id, {
       mission_status: missionStatus,
       vehicle_status: vehicleStatus,
-      // mission_status: { [missionStatus + '_at']: Date.now() }
+      captain_id: mission.vehicle_id
     });
   }
-
-  /* async updateVehicle(drone) {
-    drone.davId = DRONE_ID_MAP[drone.id].address;
-    this.addDrone(drone);
-    const state = await this.droneApi.getState(drone.id);
-    console.log(`${JSON.stringify(state.location)} ${state.status}`);
-
-    let vehicle = await apiGetVehicle(drone.davId);
-    if (vehicle) {
-      vehicle.coords = {
-        long: state.location.lon,
-        lat: state.location.lat
-      };
-      apiUpdateVehicle(vehicle);
-    } else {
-      let vehicle = {
-        id: drone.davId,
-        model: 'CopterExpress-d1',
-        icon: `https://lorempixel.com/100/100/abstract/?${drone.davId}`,
-        coords: {
-          long: state.location.lon,
-          lat: state.location.lat
-        },
-        missions_completed: 0,
-        missions_completed_7_days: 0,
-        status: 'available'
-      };
-      apiAddNewVehicle(vehicle);
-    }
-  } */
-
-  /* getBid(davId, origin, pickup, dropoff) {
-    dropoff = {
-      lat: parseFloat(dropoff.lat),
-      long: parseFloat(dropoff.long)
-    };
-    const distToPickup = geolib.getDistance(
-      { latitude: origin.lat, longitude: origin.long },
-      { latitude: pickup.lat, longitude: pickup.long },
-      1,
-      1
-    );
-
-    const distToDropoff = geolib.getDistance(
-      { latitude: pickup.lat, longitude: pickup.long },
-      { latitude: dropoff.lat, longitude: dropoff.long },
-      1,
-      1
-    );
-
-    const totalDist = distToPickup + distToDropoff;
-
-    const bidInfo = {
-      price: `${totalDist / DRONE_PRICE_RATE}`,
-      price_type: 'flat',
-      price_description: 'Flat fee',
-      time_to_pickup: distToPickup / DRONE_AVG_VELOCITY + 1,
-      time_to_dropoff: distToDropoff / DRONE_AVG_VELOCITY + 1,
-      drone_manufacturer: 'Copter Express',
-      drone_model: 'SITL',
-      expires_at: Date.now() + 3600000,
-      ttl: 120 // TTL in seconds
-    };
-
-    return bidInfo;
-  } */
 
   async onNeed(station, need) {
     if (station.needs.includes(need.id)) {
