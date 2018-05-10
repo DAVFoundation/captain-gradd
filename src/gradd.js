@@ -66,7 +66,7 @@ class Gradd {
     const missionUpdates = Rx.Observable.timer(0, 1000)
       .mergeMap(async () => {
         let mission = await API.missions.getMission(missionId);
-        let vehicle = await API.captains.getCaptain(mission.vehicle_id);
+        let vehicle = await API.captains.getCaptain(mission.captain_id);
         return { mission, vehicle };
       })
       .distinctUntilChanged(
@@ -153,7 +153,7 @@ class Gradd {
     await API.missions.updateMission(mission.mission_id, {
       mission_status: missionStatus,
       vehicle_status: vehicleStatus,
-      captain_id: mission.vehicle_id
+      captain_id: mission.captain_id
     });
   }
 
@@ -190,7 +190,7 @@ class Gradd {
   }
 
   onContractCreated(drone, mission) {
-    this.beginMission(mission.vehicle_id, mission.mission_id);
+    this.beginMission(mission.captain_id, mission.mission_id);
   }
 }
 
