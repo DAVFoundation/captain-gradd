@@ -7,6 +7,8 @@ const { DavSDK, API } = require('dav-js');
 const Rx = require('rxjs/Rx');
 const stationId = require('./station-id');
 const mnemonic = require('../mnemonic');
+const graddMailService = require('./graddMailService');
+
 
 class Gradd {
   constructor() {
@@ -123,13 +125,13 @@ class Gradd {
 
   async onInMission(mission, captain) {
     // await apiUpdateVehicle(vehicle);
-    console.log('Captain Status: ' + captain.status + '\n===================================================================================')
+
     switch (captain.status) {
       case 'contract_received':
         this.updateStatus(mission, 'in_progress', 'in_progress');
         break;
       case 'in_progress':
-        //send mail here!
+        graddMailService.emailGraddStatusPayloadRequest(mission);
         break;
       case 'ready':
         break;

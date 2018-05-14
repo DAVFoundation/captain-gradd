@@ -18,9 +18,11 @@
     "test": ""
   },
   "dependencies": {
-    "dav-js": "latest",
     "axios": "^0.18.0",
+    "dav-js": "latest",
     "geolib": "^2.0.24",
+    "mailcomposer": "^4.0.2",
+    "mailgun-js": "^0.18.0",
     "qs": "^6.5.1",
     "rxjs": "^5.5.8"
   },
