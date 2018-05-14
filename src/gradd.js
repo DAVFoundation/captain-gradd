@@ -123,17 +123,13 @@ class Gradd {
 
   async onInMission(mission, captain) {
     // await apiUpdateVehicle(vehicle);
-
+    console.log('Captain Status: ' + captain.status + '\n===================================================================================')
     switch (captain.status) {
       case 'contract_received':
-        setTimeout(async () => {
-          await this.updateStatus(mission, 'in_progress', 'in_progress');
-        }, 3000);
+        this.updateStatus(mission, 'in_progress', 'in_progress');
         break;
       case 'in_progress':
-        setTimeout(async () => {
-          await this.updateStatus(mission, 'ready', 'ready');
-        }, 20000);
+        //send mail here!
         break;
       case 'ready':
         break;
