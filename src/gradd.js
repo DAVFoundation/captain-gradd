@@ -19,8 +19,8 @@ class Gradd {
     this.station = {
       sdk:new DavSDK(stationId, stationId, mnemonic),
       location: {
-        longitude: 8.5444809,
-        latitude: 47.397669
+        longitude: 34.767,
+        latitude: 32.065
       },
       needs: [],
       bids: []
