@@ -2,6 +2,8 @@ link-dav-js:
 	npm link ../dav-js
 
 build:
+	@rsync -a ../dav-js build
+	@rm -rf ../dav-js/node_modules
 	@docker-compose build
 
 up: build
@@ -14,3 +16,5 @@ create-aws-stg-env:
 deploy-aws-stg-env:
 	@eb deploy --profile eb-cli-dav --staged
 
+down:
+	@docker-compose down

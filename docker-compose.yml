@@ -3,6 +3,7 @@ version: '3'
 services:
   captain-gradd:
     build: .
+    command: 'bash -c ./dev-run.sh'
     ports:
       - '8887:8080'
     environment:
@@ -11,7 +12,7 @@ services:
       CAPTAIN_PORT: 8080
       CAPTAIN_HOSTNAME: 0.0.0.0
     volumes:
-      - /app/node_modules
+      - ./build:/build
       - .:/app
     networks:
       - dav
