@@ -1,12 +1,12 @@
 const email = require('./lib/email');
 
-const GRADD_FROM = `DAV Foundation`;
-const GRADD_TO = `hai@dav.network`;
-const GRADD_TITLE = `New DAV contract received`;
-const GRADD_BODY = `Gradd body\n\n`;
-const MISSION_PARAM_NAME = `mission`;
-const SCHEME = 'https';
-const DOMAIN = 'missions.io';
+const GRADD_FROM = process.env.GRADD_FROM || `DAV Foundation`;
+const GRADD_TO = process.env.GRADD_TITLE || `hai@dav.network`;
+const GRADD_TITLE = process.env.GRADD_TITLE || `New DAV contract received`;
+const GRADD_BODY = process.env.GRADD_BODY || `Gradd body\n\n`;
+const MISSION_PARAM_NAME = process.env.MISSION_PARAM_NAME || `mission`;
+const SCHEME = process.env.SCHEME || 'https';
+const DOMAIN = process.env.DOMAIN || 'missions.io';
 const DUMMY_MISSION = {
   mission_id        : 'AAAA1111',
   pickup_latitude   : 0,

@@ -9,6 +9,10 @@
       "request": "launch",
       "name": "Launch Program",
       "program": "${workspaceFolder}/src/index.js",
+      "env": {
+        "BLOCKCHAIN_TYPE": "NONE",
+        "DOMAIN": "localhost:3333"
+      }
     }
   ]
 }
