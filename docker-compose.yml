@@ -12,6 +12,7 @@ services:
       DAV_API_URL: http://mission-control:8443
       CAPTAIN_PORT: 8080
       CAPTAIN_HOSTNAME: 0.0.0.0
+      BLOCKCHAIN_TYPE: NONE
     volumes:
       - ./build:/build
       - .:/app
