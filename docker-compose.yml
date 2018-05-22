@@ -6,16 +6,27 @@ services:
     command: 'bash -c ./dev-run.sh'
     ports:
       - '8887:8080'
+      - '9228:9229'
     environment:
       NODE_ENV: development     
       ETH_NODE_URL: http://dav-contracts:8545
-      DAV_API_URL: http://mission-control:8443
+      MISSION_CONTROL_URL: http://mission-control:8443
       CAPTAIN_PORT: 8080
       CAPTAIN_HOSTNAME: 0.0.0.0
       BLOCKCHAIN_TYPE: NONE
+
+      #Email service configuration
+      MISSION_DOMAIN: http://localhost:3333
+      MAILGUN_DOMAIN: mg.dav.network 
+      MAILGUN_API_KEY: key-099572ee6cd2260a358eeb65b3eeeef8
+      GRADD_TO: hai@dav.network
+      #End
+
     volumes:
       - ./build:/build
       - .:/app
+    networks:
+      - dav
     external_links:
       - missioncontrol_missioncontrol_1:mission-control
       - dav-contracts:dav-contracts

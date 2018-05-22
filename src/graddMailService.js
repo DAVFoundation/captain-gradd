@@ -1,12 +1,11 @@
 const email = require('./lib/email');
 
 const GRADD_FROM = process.env.GRADD_FROM || `DAV Foundation`;
-const GRADD_TO = process.env.GRADD_TITLE || `hai@dav.network`;
+const GRADD_TO = process.env.GRADD_TO || `hai@dav.network`;
 const GRADD_TITLE = process.env.GRADD_TITLE || `New DAV contract received`;
 const GRADD_BODY = process.env.GRADD_BODY || `Gradd body\n\n`;
 const MISSION_PARAM_NAME = process.env.MISSION_PARAM_NAME || `mission`;
-const SCHEME = process.env.SCHEME || 'https';
-const DOMAIN = process.env.DOMAIN || 'missions.io';
+const MISSION_DOMAIN = process.env.MISSION_DOMAIN || 'https://missions.io';
 const DUMMY_MISSION = {
   mission_id        : 'AAAA1111',
   pickup_latitude   : 0,
@@ -41,7 +40,7 @@ const buildMissionParamFromMission = (mission_param) => {
 
 const buildLinkToGraddForm = mission => {
   let missionParamBase64 = encodeURIComponent(buildMissionParamFromMission(mission));
-  let routeCreatorURL = `${SCHEME}://${DOMAIN}/html/route-creator.html?${MISSION_PARAM_NAME}=${missionParamBase64}`;
+  let routeCreatorURL = `${MISSION_DOMAIN}/html/route-creator.html?${MISSION_PARAM_NAME}=${missionParamBase64}`;
   let link = `<a href="${routeCreatorURL}">Press Here to input route</a><br/>\n
     If the above link does not work, copy and paste the following into your browser:<br/>\n
     ${routeCreatorURL}`;

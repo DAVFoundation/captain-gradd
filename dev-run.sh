@@ -14,4 +14,4 @@ npm i
 echo linking dav-js...
 npm link ./build/dav-js
 
-nodemon src/index.js
+nodemon --inspect=0.0.0.0:9229 src/index.js
