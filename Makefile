@@ -10,8 +10,8 @@ up: build
 	@docker-compose up
 
 create-aws-stg-env:
-	@eb init captain-coex
-	@eb create captain-coex-stg --cname captain-coex-stg -k captain-coex-key
+	@eb init captain-gradd
+	@eb create captain-gradd-stg --cname captain-gradd-stg -k captain-gradd-key
 
 deploy-aws-stg-env:
 	@eb deploy --profile eb-cli-dav --staged

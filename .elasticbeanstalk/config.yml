@@ -1,10 +1,11 @@
 branch-defaults:
   master:
-    environment: captain-coex-stg
+    environment: captain-gradd-stg1
+    group_suffix: null
 global:
-  application_name: captain-coex
+  application_name: captain-gradd
   branch: null
-  default_ec2_keyname: captain-coex-key
+  default_ec2_keyname: captain-gradd-key
   default_platform: Docker 17.09.1-ce
   default_region: us-east-1
   include_git_submodules: true
