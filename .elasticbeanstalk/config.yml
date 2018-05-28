@@ -1,5 +1,5 @@
 branch-defaults:
-  master:
+  staging:
     environment: captain-gradd-stg1
     group_suffix: null
 global:
