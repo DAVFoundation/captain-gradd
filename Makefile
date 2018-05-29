@@ -13,7 +13,7 @@ create-aws-stg-env: FORCE
 	@eb create captain-gradd-stg --cname captain-gradd-stg -k captain-gradd-key
 
 deploy-aws-stg-env: FORCE
-	@eb deploy --profile eb-cli-dav --staged
+	@eb deploy --staged
 
 down: FORCE
 	@docker-compose down
