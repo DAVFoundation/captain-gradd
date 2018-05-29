@@ -165,6 +165,7 @@ class Gradd {
       price_type: 'flat',
       price_description: 'Flat fee',
       captain_id: station.sdk.davId,
+      ETA: 72,
       // time_to_pickup: (distToPickup / DRONE_AVG_VELOCITY) + 1,
       // time_to_dropoff: (distToDropoff / DRONE_AVG_VELOCITY) + 1,
       // drone_manufacturer: 'Copter Express',

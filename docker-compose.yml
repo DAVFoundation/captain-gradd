@@ -10,7 +10,7 @@ services:
     environment:
       NODE_ENV: development     
       ETH_NODE_URL: https://ropsten.infura.io/wUiZtmeZ1KwjFrcC8zRO
-      MISSION_CONTROL_URL: http://missioncontrol-stg.us-east-1.elasticbeanstalk.com
+      MISSION_CONTROL_URL: http://mission-control:8443
       CAPTAIN_PORT: 8080
       CAPTAIN_HOSTNAME: 0.0.0.0
       BLOCKCHAIN_TYPE: TESTNET
@@ -19,7 +19,7 @@ services:
       MISSION_DOMAIN: http://localhost:3333
       MAILGUN_DOMAIN: mg.dav.network 
       MAILGUN_API_KEY: key-099572ee6cd2260a358eeb65b3eeeef8
-      GRADD_TO: anatoly@dav.network
+      GRADD_TO: hai@dav.network
       #End
 
     volumes:
