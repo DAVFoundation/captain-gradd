@@ -12,15 +12,16 @@ const graddMailService = require('./graddMailService');
 
 class Gradd {
   constructor() {
-
+    
   }
 
   async init() {
+    const [latitude, longitude] = process.env.GRADD_LOCATION.split(',').map(v => parseFloat(v));
     this.station = {
       sdk:new DavSDK(stationId, stationId, mnemonic),
       location: {
-        longitude: 34.767,
-        latitude: 32.065
+        longitude: longitude,
+        latitude: latitude
       },
       needs: [],
       bids: []
@@ -38,7 +39,6 @@ class Gradd {
       missions_completed_7_days: 0,
       status: 'available'
     });
-
     let isRegistered = await this.station.sdk.isRegistered();
     if (isRegistered) {
       let missionContract = this.station.sdk.mission().contract();
@@ -161,7 +161,7 @@ class Gradd {
     }
     
     const bidInfo = {
-      price: '5000',
+      price: '150000000000000000000',
       price_type: 'flat',
       price_description: 'Flat fee',
       captain_id: station.sdk.davId,

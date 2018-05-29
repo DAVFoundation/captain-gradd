@@ -9,12 +9,12 @@ services:
       - '9228:9229'
     environment:
       NODE_ENV: development     
-      ETH_NODE_URL: http://dav-contracts:8545
+      ETH_NODE_URL: http://52.71.196.240:8545
       MISSION_CONTROL_URL: http://mission-control:8443
       CAPTAIN_PORT: 8080
       CAPTAIN_HOSTNAME: 0.0.0.0
-      BLOCKCHAIN_TYPE: NONE
-
+      BLOCKCHAIN_TYPE: DAV_TEST_NET
+      GRADD_LOCATION: '32, 34.8' #lat, long
       #Email service configuration
       MISSION_DOMAIN: http://localhost:3333
       MAILGUN_DOMAIN: mg.dav.network 
