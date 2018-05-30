@@ -9,15 +9,15 @@ services:
       - '9228:9229'
     environment:
       NODE_ENV: development     
-      ETH_NODE_URL: http://52.71.196.240:8545
+      ETH_NODE_URL: https://ropsten.infura.io/wUiZtmeZ1KwjFrcC8zRO
       MISSION_CONTROL_URL: http://mission-control:8443
       CAPTAIN_PORT: 8080
       CAPTAIN_HOSTNAME: 0.0.0.0
-      BLOCKCHAIN_TYPE: DAV_TEST_NET
+      BLOCKCHAIN_TYPE: TESTNET
       GRADD_LOCATION: '32, 34.8' #lat, long
       #Email service configuration
       MISSION_DOMAIN: http://localhost:3333
-      MAILGUN_DOMAIN: mg.dav.network 
+      MAILGUN_DOMAIN: mg.dav.network
       MAILGUN_API_KEY: key-099572ee6cd2260a358eeb65b3eeeef8
       GRADD_TO: hai@dav.network
       #End
