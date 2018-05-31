@@ -40,6 +40,7 @@ class Gradd {
       status: 'available'
     });
     let isRegistered = await this.station.sdk.isRegistered();
+
     if (isRegistered) {
       let missionContract = this.station.sdk.mission().contract();
       missionContract.subscribe(
@@ -47,7 +48,8 @@ class Gradd {
         err => console.log(err),
         () => console.log('')
       );
-    }
+    } else throw 'Captain id must be registered!';
+    
     const droneDelivery = this.station.sdk.needs().forType('route_plan', {
       ...this.station.location,
       radius: 10e10,

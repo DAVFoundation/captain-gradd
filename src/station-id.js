@@ -1,1 +1,1 @@
-module.exports = '0x54ce6167039eceab950997abc7179ccc3a8b4fa0';
+module.exports = process.env.BLOCKCHAIN_TYPE === 'MAINNET' ? '0x2884711d6d545ced73e835f0cc0105981927172e' : '0x54ce6167039eceab950997abc7179ccc3a8b4fa0';
