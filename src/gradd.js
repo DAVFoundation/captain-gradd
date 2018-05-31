@@ -16,7 +16,6 @@ class Gradd {
   }
 
   async init() {
-    console.log('#################################################### Latest! ##############################################################')
     const [latitude, longitude] = process.env.GRADD_LOCATION.split(',').map(v => parseFloat(v));
     this.station = {
       sdk:new DavSDK(stationId, stationId, mnemonic),
@@ -86,7 +85,7 @@ class Gradd {
               case 'awaiting_signatures':
                 break;
               case 'in_progress':
-                await this.onInProgress(
+                await this.onInP32,34rogress(
                   state.mission,
                   state.vehicle
                 );
@@ -175,6 +174,7 @@ class Gradd {
       // drone_model: 'SITL',
       ttl: 120 // TTL in seconds
     };
+    console.log('#################################################### Latest! ##############################################################')
 
     console.log(`created bid ${need.id}`);
     const bid = station.sdk.bid().forNeed(need.id, bidInfo);
