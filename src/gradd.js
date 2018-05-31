@@ -16,6 +16,7 @@ class Gradd {
   }
 
   async init() {
+    console.log('#################################################### Latest! ##############################################################')
     const [latitude, longitude] = process.env.GRADD_LOCATION.split(',').map(v => parseFloat(v));
     this.station = {
       sdk:new DavSDK(stationId, stationId, mnemonic),
