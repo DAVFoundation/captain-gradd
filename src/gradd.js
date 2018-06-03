@@ -12,10 +12,11 @@ const graddMailService = require('./graddMailService');
 
 class Gradd {
   constructor() {
-    
+
   }
 
   async init() {
+    console.log(`Captain init ${new Date().toISOString()}`);
     const [latitude, longitude] = process.env.GRADD_LOCATION.split(',').map(v => parseFloat(v));
     this.station = {
       sdk:new DavSDK(stationId, stationId, mnemonic),
@@ -26,7 +27,7 @@ class Gradd {
       needs: [],
       bids: []
     }
-    
+
     this.station.sdk.initCaptain({
       id: stationId,
       model: 'GRADD',
@@ -49,7 +50,7 @@ class Gradd {
         () => console.log('')
       );
     } else throw 'Captain id must be registered!';
-    
+
     const droneDelivery = this.station.sdk.needs().forType('route_plan', {
       ...this.station.location,
       radius: 10e10,
@@ -85,7 +86,7 @@ class Gradd {
               case 'awaiting_signatures':
                 break;
               case 'in_progress':
-                await this.onInP32,34rogress(
+                await this.onInProgress(
                   state.mission,
                   state.vehicle
                 );
@@ -161,7 +162,7 @@ class Gradd {
     if (station.needs.includes(need.id)) {
       return;
     }
-    
+
     const bidInfo = {
       price: '150000000000000000000',
       price_type: 'flat',
