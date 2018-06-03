@@ -174,9 +174,7 @@ class Gradd {
       // drone_model: 'SITL',
       ttl: 120 // TTL in seconds
     };
-    console.log('#################################################### Latest! ##############################################################')
-
-    console.log(`created bid ${need.id}`);
+    console.log(`created bid ${need.id}: Latest`);
     const bid = station.sdk.bid().forNeed(need.id, bidInfo);
     bid.subscribe(
       (bid) => this.onBidAccepted(station, bid),
