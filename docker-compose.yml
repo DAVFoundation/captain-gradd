@@ -14,7 +14,7 @@ services:
       CAPTAIN_PORT: 8080
       CAPTAIN_HOSTNAME: 0.0.0.0
       BLOCKCHAIN_TYPE: MAINNET
-      GRADD_LOCATION: '32, 34.8' #lat, long
+      GRADD_LOCATION: '32, 34.8, 32.3, 34.9, 32.8, 34.7' #lat, long
       #Email service configuration
       MISSION_DOMAIN: http://localhost:3333
       MAILGUN_DOMAIN: mg.dav.network

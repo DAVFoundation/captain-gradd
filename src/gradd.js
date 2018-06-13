@@ -5,7 +5,6 @@ const {
 } = require('./missioncontrol/vehicles');
 const { DavSDK, API } = require('dav-js');
 const Rx = require('rxjs/Rx');
-const stationId = require('./station-id');
 const mnemonic = require('../mnemonic');
 const graddMailService = require('./graddMailService');
 
@@ -15,15 +14,12 @@ class Gradd {
 
   }
 
-  async init() {
+  async init({stationId, location}) {
     console.log(`Captain init ${new Date().toISOString()}`);
-    const [latitude, longitude] = process.env.GRADD_LOCATION.split(',').map(v => parseFloat(v));
+    const sdk = new DavSDK(stationId, stationId, mnemonic);
     this.station = {
-      sdk:new DavSDK(stationId, stationId, mnemonic),
-      location: {
-        longitude: longitude,
-        latitude: latitude
-      },
+      sdk: sdk,
+      location: location,
       needs: [],
       bids: []
     }
@@ -40,8 +36,9 @@ class Gradd {
       missions_completed_7_days: 0,
       status: 'available'
     });
-    let isRegistered = await this.station.sdk.isRegistered();
 
+    let isRegistered = await this.station.sdk.isRegistered();
+  
     if (isRegistered) {
       let missionContract = this.station.sdk.mission().contract();
       missionContract.subscribe(
@@ -49,7 +46,10 @@ class Gradd {
         err => console.log(err),
         () => console.log('')
       );
-    } else throw 'Captain id must be registered!';
+    } else {
+      const tokenContract = await sdk.davContracts.getInstance('identity');
+      throw `Captain ${stationId} is not registered to ${JSON.stringify(tokenContract.address)}`;
+    }
 
     const droneDelivery = this.station.sdk.needs().forType('route_plan', {
       ...this.station.location,
@@ -196,4 +196,4 @@ class Gradd {
   }
 }
 
-module.exports = new Gradd();
+module.exports = Gradd;
