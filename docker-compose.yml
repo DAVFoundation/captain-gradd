@@ -10,7 +10,7 @@ services:
     environment:
       NODE_ENV: development     
       ETH_NODE_URL: https://mainnet.infura.io/wUiZtmeZ1KwjFrcC8zRO
-      MISSION_CONTROL_URL: http://mission-control:8443
+      MISSION_CONTROL_URL: http://ctrl.stg.missions.io
       CAPTAIN_PORT: 8080
       CAPTAIN_HOSTNAME: 0.0.0.0
       BLOCKCHAIN_TYPE: MAINNET

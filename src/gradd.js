@@ -15,7 +15,7 @@ class Gradd {
   }
 
   async init({stationId, location}) {
-    console.log(`Captain init ${new Date().toISOString()}`);
+    console.log(`Captain init ${new Date().toISOString()} V-13-06`);
     const sdk = new DavSDK(stationId, stationId, mnemonic);
     this.station = {
       sdk: sdk,
@@ -36,7 +36,6 @@ class Gradd {
       missions_completed_7_days: 0,
       status: 'available'
     });
-
     let isRegistered = await this.station.sdk.isRegistered();
   
     if (isRegistered) {
@@ -175,7 +174,7 @@ class Gradd {
       // drone_model: 'SITL',
       ttl: 120 // TTL in seconds
     };
-    console.log(`created bid ${need.id}: Latest`);
+    console.log(`created bid ${need.id}`);
     const bid = station.sdk.bid().forNeed(need.id, bidInfo);
     bid.subscribe(
       (bid) => this.onBidAccepted(station, bid),
