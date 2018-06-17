@@ -172,7 +172,7 @@ class Gradd {
       // time_to_dropoff: (distToDropoff / DRONE_AVG_VELOCITY) + 1,
       // drone_manufacturer: 'Copter Express',
       // drone_model: 'SITL',
-      ttl: 120 // TTL in seconds
+      ttl: 259200 // TTL in seconds
     };
     console.log(`created bid ${need.id}`);
     const bid = station.sdk.bid().forNeed(need.id, bidInfo);
