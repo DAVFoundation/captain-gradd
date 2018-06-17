@@ -9,11 +9,11 @@ services:
       - '9228:9229'
     environment:
       NODE_ENV: development     
-      ETH_NODE_URL: https://mainnet.infura.io/wUiZtmeZ1KwjFrcC8zRO
-      MISSION_CONTROL_URL: http://ctrl.stg.missions.io
+      ETH_NODE_URL: https://ropsten.infura.io/wUiZtmeZ1KwjFrcC8zRO
+      DAV_API_URL: http://mission-control:8443
       CAPTAIN_PORT: 8080
       CAPTAIN_HOSTNAME: 0.0.0.0
-      BLOCKCHAIN_TYPE: MAINNET
+      BLOCKCHAIN_TYPE: TESTNET
       GRADD_LOCATION: '32, 34.8, 32.3, 34.9, 32.8, 34.7' #lat, long
       #Email service configuration
       MISSION_DOMAIN: http://localhost:3333
