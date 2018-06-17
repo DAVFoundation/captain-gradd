@@ -15,7 +15,7 @@ class Gradd {
   }
 
   async init({stationId, location}) {
-    console.log(`Captain init ${new Date().toISOString()} V-13-06`);
+    console.log(`Captain init ${new Date().toISOString()}`);
     const sdk = new DavSDK(stationId, stationId, mnemonic);
     this.station = {
       sdk: sdk,
@@ -52,7 +52,7 @@ class Gradd {
 
     const droneDelivery = this.station.sdk.needs().forType('route_plan', {
       ...this.station.location,
-      radius: 10e10,
+      radius: 4000,
       ttl: 120 // TTL in seconds
     });
 
