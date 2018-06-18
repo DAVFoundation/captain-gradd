@@ -27,9 +27,9 @@ class Gradd {
     }
 
     this.station.sdk.initCaptain({
-      id: stationId,
+      id: davId,
       model: 'GRADD',
-      icon: `https://lorempixel.com/100/100/abstract/?${stationId}`,
+      icon: `https://lorempixel.com/100/100/abstract/?${davId}`,
       coords: {
         long: this.station.location.longitude,
         lat: this.station.location.latitude
@@ -49,7 +49,7 @@ class Gradd {
       );
     } else {
       const tokenContract = await sdk.davContracts.getInstance('identity');
-      throw `Captain ${stationId} is not registered to ${JSON.stringify(tokenContract.address)}`;
+      throw `Captain ${davId} is not registered to ${JSON.stringify(tokenContract.address)}`;
     }
 
     const droneDelivery = this.station.sdk.needs().forType('route_plan', {
