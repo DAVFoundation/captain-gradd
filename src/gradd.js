@@ -16,7 +16,9 @@ class Gradd {
 
   async init({stationId, location}) {
     console.log(`Captain init ${new Date().toISOString()}`);
-    const sdk = new DavSDK(stationId, stationId, mnemonic);
+    const davId = stationId;
+    const walletAddress = stationId;
+    const sdk = new DavSDK(davId, walletAddress, mnemonic);
     this.station = {
       sdk: sdk,
       location: location,
