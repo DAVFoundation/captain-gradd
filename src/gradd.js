@@ -1,9 +1,4 @@
-const {
-  getVehicle: apiGetVehicle,
-  addNewVehicle: apiAddNewVehicle,
-  updateVehicle: apiUpdateVehicle
-} = require('./missioncontrol/vehicles');
-const { DavSDK, API } = require('dav-js');
+const { DavSDK } = require('dav-js');
 const Rx = require('rxjs/Rx');
 const stationId = require('./station-id');
 const mnemonic = require('../mnemonic');
@@ -53,7 +48,7 @@ class Gradd {
 
     const droneDelivery = this.station.sdk.needs().forType('route_plan', {
       ...this.station.location,
-      radius: 10e10,
+      radius: 4000000,
       ttl: 120 // TTL in seconds
     });
 
@@ -70,8 +65,8 @@ class Gradd {
   async beginMission(vehicleId, missionId) {
     const missionUpdates = Rx.Observable.timer(0, 1000)
       .mergeMap(async () => {
-        let mission = await API.missions.getMission(missionId);
-        let vehicle = await API.captains.getCaptain(mission.captain_id);
+        let mission = await this.station.sdk.getMission(missionId);
+        let vehicle = await this.station.sdk.getCaptain(mission.captain_id);
         return { mission, vehicle };
       })
       .distinctUntilChanged(
@@ -118,7 +113,7 @@ class Gradd {
   }
 
   async onInProgress(mission, captain) {
-    await API.missions.updateMission(mission.mission_id, {
+    await this.station.sdk.updateMission(mission.mission_id, {
       status: 'in_mission',
       captain_id: captain.id
     });
@@ -127,7 +122,6 @@ class Gradd {
   }
 
   async onInMission(mission, captain) {
-    // await apiUpdateVehicle(vehicle);
 
     switch (captain.status) {
       case 'contract_received':
@@ -139,7 +133,7 @@ class Gradd {
       case 'ready':
         break;
       case 'available':
-        await API.missions.updateMission(mission.mission_id, {
+        await this.station.sdk.updateMission(mission.mission_id, {
           status: 'completed',
           captain_id: captain.id
         });
@@ -151,7 +145,7 @@ class Gradd {
   }
 
   async updateStatus(mission, missionStatus, vehicleStatus) {
-    await API.missions.updateMission(mission.mission_id, {
+    await this.station.sdk.updateMission(mission.mission_id, {
       mission_status: missionStatus,
       vehicle_status: vehicleStatus,
       captain_id: mission.captain_id
