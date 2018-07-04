@@ -1,6 +1,5 @@
 const { DavSDK } = require('dav-js');
 const Rx = require('rxjs/Rx');
-const stationId = require('./station-id');
 const mnemonic = require('../mnemonic');
 const graddMailService = require('./graddMailService');
 
@@ -10,23 +9,22 @@ class Gradd {
 
   }
 
-  async init() {
+  async init({stationId, location}) {
     console.log(`Captain init ${new Date().toISOString()}`);
-    const [latitude, longitude] = process.env.GRADD_LOCATION.split(',').map(v => parseFloat(v));
+    const davId = stationId;
+    const walletAddress = stationId;
+    const sdk = new DavSDK(davId, walletAddress, mnemonic);
     this.station = {
-      sdk:new DavSDK(stationId, stationId, mnemonic),
-      location: {
-        longitude: longitude,
-        latitude: latitude
-      },
+      sdk: sdk,
+      location: location,
       needs: [],
       bids: []
     }
 
     this.station.sdk.initCaptain({
-      id: stationId,
+      id: davId,
       model: 'GRADD',
-      icon: `https://lorempixel.com/100/100/abstract/?${stationId}`,
+      icon: `https://lorempixel.com/100/100/abstract/?${davId}`,
       coords: {
         long: this.station.location.longitude,
         lat: this.station.location.latitude
@@ -36,7 +34,7 @@ class Gradd {
       status: 'available'
     });
     let isRegistered = await this.station.sdk.isRegistered();
-
+  
     if (isRegistered) {
       let missionContract = this.station.sdk.mission().contract();
       missionContract.subscribe(
@@ -44,11 +42,18 @@ class Gradd {
         err => console.log(err),
         () => console.log('')
       );
-    } else throw 'Captain id must be registered!';
+    } else {
+      const tokenContract = await sdk.davContracts.getInstance('identity');
+      throw `Captain ${davId} is not registered to ${JSON.stringify(tokenContract.address)}`;
+    }
 
     const droneDelivery = this.station.sdk.needs().forType('route_plan', {
       ...this.station.location,
+<<<<<<< HEAD
       radius: 4000000,
+=======
+      radius: 4000,
+>>>>>>> master
       ttl: 120 // TTL in seconds
     });
 
@@ -167,9 +172,9 @@ class Gradd {
       // time_to_dropoff: (distToDropoff / DRONE_AVG_VELOCITY) + 1,
       // drone_manufacturer: 'Copter Express',
       // drone_model: 'SITL',
-      ttl: 120 // TTL in seconds
+      ttl: 259200 // TTL in seconds
     };
-    console.log(`created bid ${need.id}: Latest`);
+    console.log(`created bid ${need.id}`);
     const bid = station.sdk.bid().forNeed(need.id, bidInfo);
     bid.subscribe(
       (bid) => this.onBidAccepted(station, bid),
@@ -190,4 +195,4 @@ class Gradd {
   }
 }
 
-module.exports = new Gradd();
+module.exports = Gradd;
