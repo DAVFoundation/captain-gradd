@@ -49,11 +49,7 @@ class Gradd {
 
     const droneDelivery = this.station.sdk.needs().forType('route_plan', {
       ...this.station.location,
-<<<<<<< HEAD
-      radius: 4000000,
-=======
-      radius: 4000,
->>>>>>> master
+      radius: 40000,
       ttl: 120 // TTL in seconds
     });
 
