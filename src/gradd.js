@@ -159,7 +159,7 @@ class Gradd {
     }
 
     const bidInfo = {
-      price: '150000000000000000000',
+      price: '15000000000000000',
       price_type: 'flat',
       price_description: 'Flat fee',
       captain_id: station.sdk.davId,
